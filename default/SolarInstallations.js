@@ -1,5 +1,11 @@
 cube(`SolarInstallations`, {
-  sql_table: `public.project_tracker_masters`,
+  sql: `
+    SELECT *
+    FROM public.project_tracker_masters
+    WHERE status_id IN (
+      SELECT id FROM public.statuses WHERE filter = true
+    )
+  `,
 
   data_source: `default`,
 
@@ -147,6 +153,7 @@ cube(`SolarInstallations`, {
       type: `sum`,
       title: `Total Solar Capacity (MW)`,
       format: `number`,
+      filters: [{ sql: `${CUBE}.status_id IN (SELECT id FROM public.statuses WHERE filter = 'true')` }],
     },
 
     averageCapacity: {
