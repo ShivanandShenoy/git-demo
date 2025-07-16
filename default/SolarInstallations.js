@@ -10,6 +10,12 @@ cube(`SolarInstallations`, {
       AND sub_tracker_masters.name = 'Large Scale Solar'
     )
   `,
+  // cube.js
+  // contextToAppId: ({ securityContext }) => {
+  //   return `CUBE_APP_${securityContext.tenant_id}`
+  // }
+  // cube.js
+  // sql_table: `project_tracker_${COMPILE_CONTEXT.securityContext.tenant_id}`,
   // sql_table: `public.solar_wind_hybrid_chart_view`,
 
   data_source: `default`,
