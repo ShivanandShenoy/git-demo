@@ -1,4 +1,4 @@
-cube(`SolarInstallations`, {
+cube(`EnergyInstallations`, {
   sql: `
     SELECT *
     FROM public.project_tracker_masters
@@ -7,15 +7,15 @@ cube(`SolarInstallations`, {
     ) and project_type_id IN (
       SELECT project_type_sub_tracker_masters.project_type_id FROM project_type_sub_tracker_masters
       JOIN sub_tracker_masters ON sub_tracker_masters.id = project_type_sub_tracker_masters.sub_tracker_master_id 
-      AND sub_tracker_masters.name = 'Large Scale Solar'
+      AND sub_tracker_masters.name = 'Energy Storage'
     )
   `,
   // sql_table: `public.solar_wind_hybrid_chart_view`,
 
   data_source: `default`,
 
-  title: `Solar Installations`,
-  description: `Solar installation projects with capacity, status, and location information`,
+  title: `Energy Installations`,
+  description: `Energy installation projects with capacity, status, and location information`,
 
   joins: {
     States: {
@@ -293,19 +293,19 @@ cube(`SolarInstallations`, {
   pre_aggregations: {
     monthlyRollup: {
       measures: [
-        SolarInstallations.count,
-        SolarInstallations.totalCapacity,
-        SolarInstallations.completedProjects,
-        SolarInstallations.underConstructionProjects,
-        SolarInstallations.preConstructionProjects,
-        SolarInstallations.underDevelopmentProjects,
+        EnergyInstallations.count,
+        EnergyInstallations.totalCapacity,
+        EnergyInstallations.completedProjects,
+        EnergyInstallations.underConstructionProjects,
+        EnergyInstallations.preConstructionProjects,
+        EnergyInstallations.underDevelopmentProjects,
       ],
       dimensions: [
-        SolarInstallations.state,
-        SolarInstallations.statusId,
-        SolarInstallations.commissioning_month,
+        EnergyInstallations.state,
+        EnergyInstallations.statusId,
+        EnergyInstallations.commissioning_month,
       ],
-      timeDimension: SolarInstallations.commissioning_date,
+      timeDimension: EnergyInstallations.commissioning_date,
       granularity: `month`,
       partitionGranularity: `year`,
       refreshKey: {
@@ -315,18 +315,18 @@ cube(`SolarInstallations`, {
 
     stateRollup: {
       measures: [
-        SolarInstallations.count,
-        SolarInstallations.totalCapacity,
-        SolarInstallations.averageCapacity,
-        SolarInstallations.completedCapacity,
-        SolarInstallations.underConstructionCapacity,
-        SolarInstallations.preConstructionCapacity,
-        SolarInstallations.underDevelopmentCapacity,
+        EnergyInstallations.count,
+        EnergyInstallations.totalCapacity,
+        EnergyInstallations.averageCapacity,
+        EnergyInstallations.completedCapacity,
+        EnergyInstallations.underConstructionCapacity,
+        EnergyInstallations.preConstructionCapacity,
+        EnergyInstallations.underDevelopmentCapacity,
       ],
       dimensions: [
-        SolarInstallations.state,
-        SolarInstallations.statusId,
-        SolarInstallations.projectTypeId,
+        EnergyInstallations.state,
+        EnergyInstallations.statusId,
+        EnergyInstallations.projectTypeId,
       ],
       refreshKey: {
         every: `1 hour`,
@@ -335,14 +335,14 @@ cube(`SolarInstallations`, {
 
     developerRollup: {
       measures: [
-        SolarInstallations.count,
-        SolarInstallations.totalCapacity,
-        SolarInstallations.completedProjects,
-        SolarInstallations.underConstructionProjects,
+        EnergyInstallations.count,
+        EnergyInstallations.totalCapacity,
+        EnergyInstallations.completedProjects,
+        EnergyInstallations.underConstructionProjects,
       ],
       dimensions: [
-        SolarInstallations.developer,
-        SolarInstallations.status,
+        EnergyInstallations.developer,
+        EnergyInstallations.status,
       ],
       refreshKey: {
         every: `1 hour`,
